@@ -1,35 +1,52 @@
-const mongoose = require("mongoose");
+const { Schema, Types, model } = require("mongoose");
 
-const thoughtsSchema = new mongoose.Schema({
-  id: { type: String, required: true },
-  lastAccessed: { type: Date, default: Date.now },
-});
-
-const thoughts = mongoose.model("thoughts", thoughtsSchema);
-
-const handleError = (err) => console.error(err);
-
-// Will add data only if collection is empty to prevent duplicates
-// More than one document can have the same name value
-thoughts.find({}).exec((err, collection) => {
-  if (collection.length === 0) {
-    thoughts.insertMany(
-      [
-        { name: "" },
-        { name: "Kids" },
-        { name: "Kids" },
-        { name: "Romance" },
-        { name: "Mystery" },
-        { name: "Contemporary" },
-        { name: "Biography" },
-      ],
-      (insertErr) => {
-        if (insertErr) {
-          handleError(insertErr);
-        }
-      }
-    );
+const thoughtsSchema = new Schema(
+  {
+    thoughtId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    thoughtText: {
+      type: String,
+      required: true,
+      maxlength: 100,
+      minlength: 4,
+    },
+    createdAt: { type: Date, default: Date.now },
+    reactions: [{ body: String, date: Date }],
+    user: { type: Schema.Types.ObjectId, ref: "user" },
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
   }
-});
+);
 
-module.exports = thoughts;
+const Thoughts = model("thoughts", thoughtsSchema);
+
+module.exports = Thoughts;
+
+// const handleError = (err) => console.error(err);
+
+// Thoughts.find({}).exec((err, collection) => {
+//   if (collection.length === 0) {
+//     Thoughts.insertMany(
+//       [
+//         { name: "" },
+//         { name: "Kids" },
+//         { name: "Kids" },
+//         { name: "Romance" },
+//         { name: "Mystery" },
+//         { name: "Contemporary" },
+//         { name: "Biography" },
+//       ],
+//       (insertErr) => {
+//         if (insertErr) {
+//           handleError(insertErr);
+//         }
+//       }
+//     );
+//   }
+// });
