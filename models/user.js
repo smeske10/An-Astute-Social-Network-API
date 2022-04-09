@@ -13,6 +13,7 @@ const userSchema = new Schema(
       minlength: 4,
     },
     lastAccessed: { type: Date, default: Date.now },
+    thoughts: { type: Schema.Types.ObjectId, ref: "Thoughts" },
   },
   {
     toJSON: {
@@ -22,7 +23,7 @@ const userSchema = new Schema(
   }
 );
 
-const Users = model("users", usersSchema);
+const Users = model("users", userSchema);
 
 const handleError = (err) => console.error(err);
 

@@ -14,7 +14,6 @@ const thoughtsSchema = new Schema(
     },
     createdAt: { type: Date, default: Date.now },
     reactions: [{ body: String, date: Date }],
-    user: { type: Schema.Types.ObjectId, ref: "user" },
   },
   {
     toJSON: {
