@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const thoughtsSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  id: { type: String, required: true },
   lastAccessed: { type: Date, default: Date.now },
 });
 
