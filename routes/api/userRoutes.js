@@ -7,13 +7,11 @@ const {
 } = require("../../controllers/userController.js");
 
 // /api/Users
-router.route("/users").get(getUsers);
+router.route("/").get(getUsers).post(createUser);
 
 // /api/Users/:UserId
-router
-  .route("/users/:userId")
-  .get(getSingleUser)
-  .post(createUser)
-  .delete(deleteUser);
+router.route("/:userId").get(getSingleUser).delete(deleteUser);
+
+router;
 
 module.exports = router;
