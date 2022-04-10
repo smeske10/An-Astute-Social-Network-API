@@ -12,7 +12,7 @@ module.exports = {
   },
   getSingleReaction(req, res) {
     Reactions.findOne({ reactionId: req.params.reactionId })
-      .then((Reaction) =>
+      .then((reaction) =>
         !reaction
           ? res.status(404).json({ message: "No Reactions with that ID" })
           : res.json(reaction)
@@ -52,7 +52,7 @@ module.exports = {
   },
   updateReaction(req, res) {
     Reactions.findOneAndUpdate(
-      { reactionId: req.params.ReactionId },
+      { reactionId: req.params.reactionId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
