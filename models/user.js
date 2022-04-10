@@ -13,7 +13,7 @@ const userSchema = new Schema(
       minlength: 4,
     },
     lastAccessed: { type: Date, default: Date.now },
-    thoughts: { type: Schema.Types.ObjectId, ref: "Thoughts" },
+    thoughts: [{ type: Schema.Types.ObjectId, ref: "Thoughts" }],
   },
   {
     toJSON: {
@@ -24,30 +24,37 @@ const userSchema = new Schema(
 );
 
 const Users = model("users", userSchema);
+module.exports = Users;
 
 const handleError = (err) => console.error(err);
 
-module.exports = Users;
-
-// const handleError = (err) => console.error(err);
-
-// Users.find({}).exec((err, collection) => {
-//   if (collection.length === 0) {
-//     Users.insertMany(
-//       [
-//         { name: "" },
-//         { name: "Kids" },
-//         { name: "Kids" },
-//         { name: "Romance" },
-//         { name: "Mystery" },
-//         { name: "Contemporary" },
-//         { name: "Biography" },
-//       ],
-//       (insertErr) => {
-//         if (insertErr) {
-//           handleError(insertErr);
-//         }
-//       }
-//     );
-//   }
-// });
+Users.find({}).exec((err, collection) => {
+  if (collection.length === 0) {
+    Users.insertMany(
+      [
+        {
+          username: "King Mongo",
+          thoughts: [
+            "62521e72766e700455dffc2c",
+            "62521e72766e700455dffc2e",
+            "62521e72766e700455dffc30",
+            "62521e72766e700455dffc32",
+          ],
+        },
+        {
+          username: "WhyNoSQL",
+          thoughts: ["62521e72766e700455dffc28", "62521e72766e700455dffc2a"],
+        },
+        {
+          username: "SpeedCoder",
+          thoughts: ["62521e72766e700455dffc26"],
+        },
+      ],
+      (insertErr) => {
+        if (insertErr) {
+          handleError(insertErr);
+        }
+      }
+    );
+  }
+});

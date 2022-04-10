@@ -7,14 +7,14 @@ const {
   updateThought,
 } = require("../../controllers/thoughtController");
 
-router.route("/thought").get(getThoughts).post(createThought);
+router.route("/").get(getThoughts).post(createThought);
 
 router
-  .route("/thought/:ThoughtId")
+  .route("/:thoughtId")
   .get(getSingleThought)
   .put(updateThought)
   .delete(deleteThought);
 
-router.route("/thought/create").post(createThought);
+router.route("/create").post(createThought);
 
 module.exports = router;
